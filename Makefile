@@ -1,0 +1,2 @@
+
+namespaced_parser: namespaced_parser.o
