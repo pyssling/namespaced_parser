@@ -1,8 +1,10 @@
 %{
   #include <stdio.h>
+  #include "snazzle_common.h"
   #include "snazzle_lex.h"
-  
-  void yyerror(const char *s);
+  #include "snazzle_parse.h"
+
+  void snazzle_error(const char *s, const char *m);
 %}
 
 // Bison fundamentally works by asking flex to get the next token, which it
@@ -22,9 +24,17 @@
 %token <fval> FLOAT
 %token <sval> STRING
 
+%debug
+
 %define api.prefix {snazzle_}
+%define api.pure
+
+%lex-param {snazzle_scan_t scanner} 
+%parse-param {snazzle_scan_t scanner}
+
 
 %%
+// { SNAZZLE_STYPE snazzle_lval }
  // this is the actual grammar that bison will parse, but for right now it's just
  // something silly to echo to the screen what bison gets from flex.  We'll
  // make a real one shortly:
@@ -38,8 +48,8 @@ INT snazzle      { printf("bison found an int: %d\n", $1); }
 ;
 %%
 
-void yyerror(const char *s) {
-  printf("EEK, parse error!  Message: %s\n", s);
+void snazzle_error(const char *s, const char *m) {
+  printf("EEK, parse error!  Message: %s, %s\n", s, m);
   // might as well halt now:
   exit(-1);
 }
