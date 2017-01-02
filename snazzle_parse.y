@@ -26,7 +26,8 @@
 
 %debug
 
-%define api.prefix {snazzle_}
+%name-prefix "snazzle_"
+//%define api.prefix {snazzle_} // this replaces name-prefix in modern versions of bison
 %define api.pure
 
 %lex-param {snazzle_scan_t scanner} 
