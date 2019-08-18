@@ -1,6 +1,8 @@
 
 namespaced_parser : namespaced_parser.o snazzle_lex.o snazzle_parse.o
 
+snazzle_lex.o: snazzle_common.h snazzle_parse.h
+
 snazzle_parse.o : snazzle_lex.h snazzle_common.h snazzle_parse.h
 
 namespaced_parser.o: snazzle_parse.h snazzle_lex.h snazzle_common.h
